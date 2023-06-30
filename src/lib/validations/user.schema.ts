@@ -13,13 +13,13 @@ export const RegisterUserSchema = z
             })
             .min(1, "Email is required")
             .email("Email is invalid"),
-        photo: z.string().optional(),
+        // photo: z.string().optional(),
         password: z
             .string({
                 required_error: "Password is required",
             })
             .min(1, "Password is required")
-            .min(8, "Password must be more than 8 characters")
+            .min(6, "Password must be more than 6 characters")
             .max(32, "Password must be less than 32 characters"),
         passwordConfirm: z
             .string({
@@ -44,7 +44,7 @@ export const LoginUserSchema = z.object({
             required_error: "Password is required",
         })
         .min(1, "Password is required")
-        .min(8, "Password must be at least 8 characters"),
+        .min(6, "Password must be at least 6 characters"),
 });
 
 export type LoginUserInput = z.infer<typeof LoginUserSchema>;

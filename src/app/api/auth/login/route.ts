@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
     try {
         const body = (await req.json()) as LoginUserInput;
         const data = LoginUserSchema.parse(body);
-
         const user = await prisma.user.findUnique({
             where: { email: data.email },
         });
@@ -55,6 +54,7 @@ export async function POST(req: NextRequest) {
 
         return response;
     } catch (error: any) {
+        // console.log("error", error);
         if (error instanceof ZodError) {
             return getErrorResponse(400, "failed validations", error);
         }
