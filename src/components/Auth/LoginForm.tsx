@@ -4,7 +4,7 @@ import { Paper, TextInput, PasswordInput, Group, Checkbox, Anchor, Button } from
 import { useRouter } from "next/navigation";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
-import { IconX } from "@tabler/icons-react";
+import { IconCheck, IconX } from "@tabler/icons-react";
 
 export function LoginForm() {
     const router = useRouter();
@@ -20,7 +20,7 @@ export function LoginForm() {
         },
     });
     const handleLogin = () => {
-		// console.log(form.values);
+        // console.log(form.values);
         fetch("/api/auth/login", {
             method: "POST",
             body: JSON.stringify(form.values),
@@ -29,13 +29,13 @@ export function LoginForm() {
             },
         })
             .then((res) => {
-                if (res.status === 200) router.push("/");
                 notifications.show({
-                    title: "Error",
-                    message: "Invalid email or password",
-                    color: "red",
-                    icon: <IconX />,
+                    title: "Success",
+                    message: "Login successful",
+                    color: "green",
+                    icon: <IconCheck />,
                 });
+                router.push("/");
             })
             .catch((err) => {
                 notifications.show({
