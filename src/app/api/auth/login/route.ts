@@ -10,10 +10,11 @@ export async function POST(req: NextRequest) {
     try {
         const body = (await req.json()) as LoginUserInput;
         const data = LoginUserSchema.parse(body);
+        console.log(data);
         const user = await prisma.user.findUnique({
             where: { email: data.email },
         });
-
+        console.log('user', user);
         if (!user || !(await compare(data.password, user.password))) {
             return getErrorResponse(401, "Invalid email or password");
         }

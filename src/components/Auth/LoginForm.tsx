@@ -29,13 +29,23 @@ export function LoginForm() {
             },
         })
             .then((res) => {
-                notifications.show({
-                    title: "Success",
-                    message: "Login successful",
-                    color: "green",
-                    icon: <IconCheck />,
-                });
-                router.push("/");
+                console.log(res);
+                if (res.status === 200) {
+                    router.push("/");
+                    notifications.show({
+                        title: "Success",
+                        message: "Login successful",
+                        color: "green",
+                        icon: <IconCheck />,
+                    });
+                } else {
+                    notifications.show({
+                        title: "Error",
+                        message: "Invalid email or password",
+                        color: "red",
+                        icon: <IconX />,
+                    });
+                }
             })
             .catch((err) => {
                 notifications.show({

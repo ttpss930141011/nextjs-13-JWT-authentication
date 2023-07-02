@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { Paper, TextInput, PasswordInput, Space, Button } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
-import { IconX } from "@tabler/icons-react";
+import { IconCheck, IconX } from "@tabler/icons-react";
 
 export function RegisterForm() {
     const router = useRouter();
@@ -33,13 +33,22 @@ export function RegisterForm() {
             },
         })
             .then((res) => {
-                if (res.status === 201) router.push("/");
-                notifications.show({
-                    title: "Error",
-                    message: "Invalid email or password",
-                    color: "red",
-                    icon: <IconX />,
-                });
+                if (res.status === 201) {
+                    router.push("/");
+                    notifications.show({
+                        title: "Success",
+                        message: "Register successful",
+                        color: "green",
+                        icon: <IconCheck />,
+                    });
+                } else {
+                    notifications.show({
+                        title: "Error",
+                        message: "Invalid email or password",
+                        color: "red",
+                        icon: <IconX />,
+                    });
+                }
             })
             .catch((err) => {
                 notifications.show({
