@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
         const user = await prisma.user.findUnique({
             where: { email: data.email },
         });
-        console.log('user', user);
+        // console.log("user", user);
         if (!user || !(await compare(data.password, user.password))) {
             return getErrorResponse(401, "Invalid email or password");
         }
@@ -36,7 +36,9 @@ export async function POST(req: NextRequest) {
         const response = new NextResponse(
             JSON.stringify({
                 status: "success",
-                token,
+                data: {
+                    token,
+                },
             }),
             {
                 status: 200,

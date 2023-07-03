@@ -2,11 +2,15 @@
 import { useRouter } from "next/navigation";
 import { Paper, TextInput, PasswordInput, Space, Button } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { notifications } from "@mantine/notifications";
-import { IconCheck, IconX } from "@tabler/icons-react";
+import { RegisterUserInput } from "@/lib/validations/user.schema";
+import useStore from "@/store";
+import { apiRegisterUser } from "@/lib/api-requests";
+import { handleApiError } from "@/lib/helpers";
+import { toast } from "react-hot-toast";
 
 export function RegisterForm() {
     const router = useRouter();
+    const store = useStore();
     const form = useForm({
         initialValues: {
             name: "",
@@ -23,45 +27,30 @@ export function RegisterForm() {
                 value !== values.password ? "Passwords do not match" : null,
         },
     });
-
-    const handleRegister = () => {
-        fetch("/api/auth/register", {
-            method: "POST",
-            body: JSON.stringify(form.values),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((res) => {
-                if (res.status === 201) {
-                    router.push("/");
-                    notifications.show({
-                        title: "Success",
-                        message: "Register successful",
-                        color: "green",
-                        icon: <IconCheck />,
-                    });
-                } else {
-                    notifications.show({
-                        title: "Error",
-                        message: "Invalid email or password",
-                        color: "red",
-                        icon: <IconX />,
-                    });
-                }
-            })
-            .catch((err) => {
-                notifications.show({
-                    title: "Error",
-                    message: err.message,
-                    color: "red",
-                    icon: <IconX />,
-                });
-            });
+    const RegisterUserFunction = async (credentials: RegisterUserInput) => {
+        store.setRequestLoading(true);
+        try {
+            const user = await apiRegisterUser(JSON.stringify(credentials));
+            store.setAuthUser(user);
+            toast.success("Register successful");
+            return router.push("/login");
+        } catch (error: any) {
+            if (error instanceof Error) {
+                handleApiError(error);
+            } else {
+                toast.error(error.message);
+                // console.log("Error message:", error.message);
+            }
+        } finally {
+            store.setRequestLoading(false);
+        }
+    };
+    const onSubmitHandler = (values: RegisterUserInput) => {
+        RegisterUserFunction(values);
     };
     return (
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-            <form onSubmit={form.onSubmit(handleRegister)}>
+            <form onSubmit={form.onSubmit(onSubmitHandler)}>
                 <TextInput
                     label="Name"
                     placeholder="Your name"
@@ -90,7 +79,13 @@ export function RegisterForm() {
                     {...form.getInputProps("passwordConfirm")}
                 />
                 <Space h="md" />
-                <Button type="submit" fullWidth mt="xl">
+                <Button
+                    type="submit"
+                    fullWidth
+                    mt="xl"
+                    loading={store.requestLoading}
+                    loaderPosition="right"
+                >
                     Sign Up
                 </Button>
             </form>

@@ -37,7 +37,7 @@ export async function middleware(req: NextRequest) {
         if (token) {
             const { sub } = await verifyJWT<{ sub: string }>(token);
             response.headers.set("X-USER-ID", sub);
-            // console.log(response.headers.get("X-USER-ID"));
+            // console.log('response.headers.get("X-USER-ID")', response.headers.get("X-USER-ID"));
             (req as AuthenticatedRequest).user = { id: sub };
         }
     } catch (error) {
@@ -66,12 +66,12 @@ export async function middleware(req: NextRequest) {
         );
     }
     if (req.url.includes("/login") && authUser) {
-        return NextResponse.redirect(new URL("/profile", req.url));
+        return NextResponse.redirect(new URL("/users/me", req.url));
     }
 
     return response;
 }
 
 export const config = {
-    matcher: ["/", "/profile", "/login", "/api/users/:path*", "/api/auth/logout"],
+    matcher: ["/users/:path*", "/login", "/api/users/:path*", "/api/auth/logout"],
 };

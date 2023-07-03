@@ -1,39 +1,76 @@
 "use client";
-import { Button } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
-import { IconCheck } from "@tabler/icons-react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Header from "@/components/Header";
+import { Container, Text, Title, createStyles, rem } from "@mantine/core";
+import { Highlight } from "@mantine/core";
 
+const useStyles = createStyles((theme) => ({
+    inner: {
+        paddingTop: `calc(${theme.spacing.xl} * 4)`,
+        paddingBottom: `calc(${theme.spacing.xl} * 4)`,
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+
+        [theme.fn.smallerThan("md")]: {
+            marginRight: 0,
+        },
+    },
+
+    title: {
+        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+        fontWeight: 900,
+        lineHeight: 1.05,
+        fontSize: rem(64),
+
+        [theme.fn.smallerThan("md")]: {
+            maxWidth: "100%",
+            fontSize: rem(34),
+            lineHeight: 1.15,
+        },
+    },
+
+    subtitle: {
+        paddingTop: theme.spacing.xl,
+        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+        fontWeight: 800,
+        lineHeight: 1.05,
+        fontSize: rem(40),
+
+        [theme.fn.smallerThan("md")]: {
+            maxWidth: "100%",
+            fontSize: rem(26),
+            lineHeight: 1.15,
+        },
+    },
+}));
 export default function Home() {
-    const router = useRouter();
-    const handLogout = () => {
-        fetch("/api/auth/logout").then((res) => {
-            notifications.show({
-                title: "Success",
-                message: "Logout successful",
-                color: "green",
-                icon: <IconCheck />,
-            });
-            router.push("/login");
-        });
-    };
-
+    const { classes } = useStyles();
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <div className="relative flex flex-col place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]">
-                <Image
-                    className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-                    src="/next.svg"
-                    alt="Next.js Logo"
-                    width={180}
-                    height={37}
-                    priority
-                />
-                <Button mt={32} onClick={handLogout}>
-                    Logout
-                </Button>
-            </div>
-        </main>
+        <>
+            <Header />
+            <Container pt="sm" size="lg">
+                <div className={classes.inner}>
+                    <Title
+                        variant="gradient"
+                        gradient={{ from: "indigo", to: "cyan" }}
+                        className={classes.title}
+                    >
+                        JWT Authentication demo
+                    </Title>
+                    <Title className={classes.subtitle}>
+                        Based on Next.js 13, Prisma, Vercel Postgres.
+                    </Title>
+
+                    <Text className={"opacity-75 max-w-full sm:max-w-[500px]"} mt={30}>
+                        This page is not protected by authentication.
+                        <Highlight highlight={["without", "logging", "in"]}>
+                            You can access it without logging in.
+                        </Highlight>
+                    </Text>
+                </div>
+            </Container>
+        </>
     );
 }
