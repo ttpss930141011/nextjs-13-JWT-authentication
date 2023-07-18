@@ -1,4 +1,5 @@
-import { getEnvVariable, getErrorResponse } from "@/lib/helpers";
+import { NEXT_PUBLIC_JWT_EXPIRES_IN } from "@/config";
+import { getErrorResponse } from "@/lib/helpers";
 import { prisma } from "@/lib/prisma";
 import { signJWT } from "@/lib/token";
 import { LoginUserInput, LoginUserSchema } from "@/lib/validations/user.schema";
@@ -10,20 +11,14 @@ export async function POST(req: NextRequest) {
     try {
         const body = (await req.json()) as LoginUserInput;
         const data = LoginUserSchema.parse(body);
-        console.log(data);
         const user = await prisma.user.findUnique({
             where: { email: data.email },
         });
-        // console.log("user", user);
         if (!user || !(await compare(data.password, user.password))) {
             return getErrorResponse(401, "Invalid email or password");
         }
-
-        const JWT_EXPIRES_IN = getEnvVariable("JWT_EXPIRES_IN");
-
-        const token = await signJWT({ sub: user.id }, { exp: `${JWT_EXPIRES_IN}m` });
-
-        const tokenMaxAge = parseInt(JWT_EXPIRES_IN) * 60;
+        const token = await signJWT({ sub: user.id }, { exp: `${NEXT_PUBLIC_JWT_EXPIRES_IN}m` });
+        const tokenMaxAge = parseInt(NEXT_PUBLIC_JWT_EXPIRES_IN) * 60;
         const cookieOptions = {
             name: "token",
             value: token,
@@ -57,7 +52,7 @@ export async function POST(req: NextRequest) {
 
         return response;
     } catch (error: any) {
-        // console.log("error", error);
+        console.log("error", error);
         if (error instanceof ZodError) {
             return getErrorResponse(400, "failed validations", error);
         }

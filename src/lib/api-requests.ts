@@ -1,6 +1,5 @@
+import { NEXT_PUBLIC_BACKEND_URL } from "@/config";
 import { FilteredUser, UserLoginResponse, UserResponse } from "./types";
-
-const SERVER_ENDPOINT = process.env.SERVER_ENDPOINT || "http://localhost:3000";
 
 async function handleResponse<T>(response: Response): Promise<T> {
     const contentType = response.headers.get("Content-Type") || "";
@@ -19,7 +18,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
 }
 
 export async function apiRegisterUser(credentials: string): Promise<FilteredUser> {
-    const response = await fetch(`${SERVER_ENDPOINT}/api/auth/register`, {
+    const response = await fetch(`${NEXT_PUBLIC_BACKEND_URL}/api/auth/register`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -32,7 +31,7 @@ export async function apiRegisterUser(credentials: string): Promise<FilteredUser
 }
 
 export async function apiLoginUser(credentials: string): Promise<string> {
-    const response = await fetch(`${SERVER_ENDPOINT}/api/auth/login`, {
+    const response = await fetch(`${NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -40,12 +39,11 @@ export async function apiLoginUser(credentials: string): Promise<string> {
         },
         body: credentials,
     });
-    // console.log(response);
     return handleResponse<UserLoginResponse>(response).then(({ data }) => data.token);
 }
 
 export async function apiLogoutUser(): Promise<void> {
-    const response = await fetch(`${SERVER_ENDPOINT}/api/auth/logout`, {
+    const response = await fetch(`${NEXT_PUBLIC_BACKEND_URL}/api/auth/logout`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -64,7 +62,7 @@ export async function apiGetAuthUser(token?: string | null): Promise<FilteredUse
     if (token) {
         headers["Authorization"] = `Bearer ${token}`;
     }
-    const response = await fetch(`${SERVER_ENDPOINT}/api/users/me`, {
+    const response = await fetch(`${NEXT_PUBLIC_BACKEND_URL}/api/users/me`, {
         method: "GET",
         credentials: "include",
         headers,
