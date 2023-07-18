@@ -27,8 +27,10 @@ export default function AuthLayout({ children }: Props) {
                         fontFamily: `Greycliff CF, ${theme.fontFamily}`,
                         fontWeight: 900,
                     })}
+                    variant="gradient"
+                    gradient={{ from: "blue", to: "purple", deg: 90 }}
                 >
-                    Next 13 Auth Example
+                    JWT Authentication demo
                 </Title>
                 {pathname === "/login" && (
                     <Text color="dimmed" size="sm" align="center" mt={5}>

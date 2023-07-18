@@ -63,7 +63,14 @@ export default function Header() {
         <Box pb={120}>
             <HeaderBase height={60} px="md">
                 <Group position="apart" sx={{ height: "100%" }}>
-                    <Image src="/favicon.ico" alt="Next.js Logo" width={30} height={30} />
+                    <Image
+                        className="cursor-pointer"
+                        src="/favicon.ico"
+                        alt="Next.js Logo"
+                        width={30}
+                        height={30}
+                        onClick={() => router.push("/")}
+                    />
                     <Group className={classes.hiddenMobile}>
                         {user ? (
                             <Button variant="default" onClick={LogoutUserFunction}>
