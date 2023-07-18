@@ -17,6 +17,7 @@ import {
 import { Image } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 
 const useStyles = createStyles((theme) => ({
@@ -45,6 +46,7 @@ export default function Header() {
         try {
             await apiLogoutUser();
             toast.success("Logout successful");
+            store.reset();
             return router.push("/");
         } catch (error: any) {
             // console.log(error);
