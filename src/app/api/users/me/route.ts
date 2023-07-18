@@ -4,15 +4,18 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
     const userId = req.headers.get("X-USER-ID");
-    // console.log('userId', userId)
     if (!userId) {
         return getErrorResponse(401, "You are not logged in, please provide token to gain access");
     }
+    try {
+        const user = await prisma.user.findUnique({ where: { id: userId } });
 
-    const user = await prisma.user.findUnique({ where: { id: userId } });
-
-    return NextResponse.json({
-        status: "success",
-        data: { user: { ...user, password: undefined } },
-    });
+        return NextResponse.json({
+            status: "success",
+            data: { user: { ...user, password: undefined } },
+        });
+    } catch (error) {
+        console.log("error", error);
+        return getErrorResponse(500, "Something went wrong");
+    }
 }
