@@ -46,7 +46,6 @@ export default function Header() {
         try {
             await apiLogoutUser();
             toast.success("Logout successful");
-            store.reset();
             return router.push("/");
         } catch (error: any) {
             // console.log(error);
@@ -58,6 +57,7 @@ export default function Header() {
             }
         } finally {
             store.setRequestLoading(false);
+            store.reset();
         }
     };
 
