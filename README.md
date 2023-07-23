@@ -1,64 +1,78 @@
-# nextjs-13-JWT-authentication
+<div align="center">
+<h1 align="center">
+<img src="./public/key.png" width="64" height="64" />
+<br>
+nextjs-13-JWT-authentication
+</h1>
 
-## Project Overview
+<p align="center">
+<img src="https://img.shields.io/badge/React-61DAFB.svg?style&logo=React&logoColor=black" alt="React" />
+<img src="https://img.shields.io/badge/ESLint-4B32C3.svg?style&logo=ESLint&logoColor=white" alt="ESLint" />
+<img src="https://img.shields.io/badge/TypeScript-3178C6.svg?style&logo=TypeScript&logoColor=white" alt="TypeScript" />
+<img src="https://img.shields.io/badge/Prisma-2D3748.svg?style&logo=Prisma&logoColor=white" alt="Prisma" />
+<img src="https://img.shields.io/badge/Markdown-000000.svg?style&logo=Markdown&logoColor=white" alt="Markdown" />
+<img src="https://img.shields.io/badge/JSON-000000.svg?style&logo=JSON&logoColor=white" alt="JSON" />
+</p>
 
-This project helps me quickly familiarize and review [middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware) in Next.js 13, JWS and others JWT-related RFCs in [jose](https://github.com/panva/jose), basic concepts in [prisma](https://www.prisma.io/docs/concepts/overview/what-is-prisma), and [Vercel Postgre](https://vercel.com/docs/storage/vercel-postgres).
+![GitHub top language](https://img.shields.io/github/languages/top/ttpss930141011/nextjs-13-JWT-authentication?style&color=5D6D7E)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ttpss930141011/nextjs-13-JWT-authentication?style&color=5D6D7E)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/ttpss930141011/nextjs-13-JWT-authentication?style&color=5D6D7E)
+![GitHub license](https://img.shields.io/github/license/ttpss930141011/nextjs-13-JWT-authentication?style&color=5D6D7E)
+
+</div>
 
 ---
 
-[![License MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](./LICENSE) 
-<img src="https://forthebadge.com/images/badges/made-with-typescript.svg" alt="Made with TypeScript" height="28" /> 
-<a href="https://vercel.com/new/clone?repository-url=https://github.com/ttpss930141011/nextjs-13-JWT-authentication&env=NEXT_PUBLIC_JWT_SECRET_KEY,NEXT_PUBLIC_JWT_EXPIRES_IN"><img src="./public/powered-by-vercel.svg" alt="Powered by Vercel" height="29" /></a>
-
+## 📍 Overview
+This project helps me quickly familiarize and review [middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware) in Next.js 13, JWS and others JWT-related RFCs in [jose](https://github.com/panva/jose), basic concepts in [prisma](https://www.prisma.io/docs/concepts/overview/what-is-prisma), and usage of [Vercel Postgre](https://vercel.com/docs/storage/vercel-postgres).
 
 ---
 
-## Installation Guide
+## 🚀 Getting Started
 
-First, run the development server:
+### 🖥 Installation
 
--   Create Vercel Postgre on [here](https://vercel.com/dashboard/vercel/stores).
--   Clone this repo as:
-    ```
-    git clone https://github.com/ttpss930141011/nextjs-13-JWT-authentication.git
-    ```
--   Choose the `.env.local` panel on the `Quickstart` tab and copy that into your local repository path: `./prisma/.env`.
--   Run command to create a new migration file.
-    ```
-    npx prisma  migrate dev --name init`
-    ```
-    -   You might find you just can only create the initial migration. That's because when we need to migrate a new schema with creating shadow database, but vercel only allows 1 db for hobby accounts. You can replace the `POSTGRES_URL_NON_POOLING` variable to your own local/cloud database. See more info in the following:
-        -   [Error when creating new Prisma migration](https://github.com/vercel/storage/issues/114)
-        -   [Prisma migrate does not work with Vercel Postgres](https://github.com/orgs/vercel/discussions/2515)
--   Run command
-    ```bash
-    npm run dev
-    # or
-    yarn dev
-    # or
-    pnpm dev
-    ```
+1. Clone the nextjs-13-JWT-authentication repository:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```sh
+git clone https://github.com/ttpss930141011/nextjs-13-JWT-authentication
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Change to the project directory:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```sh
+cd nextjs-13-JWT-authentication
+```
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+3. Install the dependencies:
 
+```sh
+npm install
+```
 
-## Learn More
+### 🤖 Using nextjs-13-JWT-authentication
 
-To learn more about Next.js, take a look at the following resources:
+#### Development
 
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sh
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### Production
 
-## Deploy on Vercel
+```sh
+npm run prod
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### Deployment
+- Deploy project on Vercel by clicking the following buttom.  
+<a href="https://vercel.com/new/clone?repository-url=https://github.com/ttpss930141011/nextjs-13-JWT-authentication&env=NEXT_PUBLIC_JWT_SECRET_KEY,NEXT_PUBLIC_JWT_EXPIRES_IN,NEXT_PUBLIC_BACKEND_URL"><img src="./public/powered-by-vercel.svg" alt="Powered by Vercel" height="29" /></a>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Create a Vercel Postgre database in [here](https://vercel.com/storage/postgres).
+- Vercel Postgre connects to Vercel project. It will add env variables automatically.
+<img src="./public/connect.png" alt="Vercel Postgre env" width="400"/>
+- Done!
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-license-to-a-repository) file for additional info.
